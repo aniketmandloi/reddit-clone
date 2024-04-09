@@ -1,0 +1,27 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "tsc -w",
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "dev2": "nodemon dist/index.js",
+    "start": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@mikro-orm/cli": "^6.1.12",
+    "@mikro-orm/core": "^6.1.12",
+    "@mikro-orm/migrations": "^6.1.12",
+    "@mikro-orm/postgresql": "^6.1.12",
+    "@types/node": "^20.12.6",
+    "nodemon": "^3.1.0",
+    "pg": "^8.11.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.4"
+  }
+}
