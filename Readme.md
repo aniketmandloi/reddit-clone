@@ -1,7 +1,5 @@
 # Reddit-Clone
 
-# AI Image Generator
-
 This is a Reddit-Clone (a Boilerplate for my Future Project includes all the technologies I will use in my projects).
 
 - Clone the repository: `git clone https://github.com/aniketmandloi/reddit-clone.git`
@@ -17,6 +15,7 @@ This template provides a minimal setup to get Node.js working with Express and G
 
 - Install Postgres in your computer: [https://www.postgresql.org/download/](Postgres)
 - Create a database: `createdb redditclone`
+- Run the Migration: `npx mikro-orm migration:create`
 
 #### Run the server Locally
 
