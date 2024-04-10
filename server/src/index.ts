@@ -4,17 +4,22 @@ import { Post } from "./entities/Post";
 import mikroOrmConfig from "./mikro-orm.config";
 
 const main = async () => {
+  // console.log(__dirname);
   const orm = await MikroORM.init(mikroOrmConfig);
 
-  const post = orm.em.create(Post, {
-    title: "my first post",
-    createdAt: "",
-    updatedAt: "",
-  });
-  await orm.em.persistAndFlush(post);
+  // await orm.getMigrator().up();
+
+  // const post = orm.em.create(Post, {
+  //   title: "my first post",
+  //   createdAt: new Date(),
+  //   updatedAt: new Date(),
+  // });
+  // await orm.em.persistAndFlush(post);
+
+  const posts = await orm.em.find(Post, {});
+  console.log(posts);
 };
 
 main().catch((err) => {
   console.error(err);
-  process.exit(1);
 });
