@@ -3,7 +3,7 @@ import { Post } from "./entities/Post";
 import { MikroORM, PostgreSqlDriver } from "@mikro-orm/postgresql";
 // import { PostgreSqlDriver, defineConfig } from "@mikro-orm/postgresql";
 import path from "path";
-import { TsMorphMetadataProvider } from "@mikro-orm/reflection";
+// import { TsMorphMetadataProvider } from "@mikro-orm/reflection";
 import { Migrator } from "@mikro-orm/migrations";
 
 const mikroOrmConfig = {
@@ -18,7 +18,7 @@ const mikroOrmConfig = {
   extensions: [Migrator],
   driver: PostgreSqlDriver,
   allowGlobalContext: true,
-  metadataProvider: TsMorphMetadataProvider,
+  // metadataProvider: TsMorphMetadataProvider,
 } as Parameters<typeof MikroORM.init>[0];
 
 export default mikroOrmConfig;
