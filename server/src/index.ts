@@ -3,6 +3,9 @@ import { __prod__ } from "./constants";
 // import { Post } from "./entities/Post";
 import mikroOrmConfig from "./mikro-orm.config";
 import express from "express";
+import { ApolloServer } from "apollo-server-express";
+import { buildSchema } from "type-graphql";
+import { HelloResolver } from "./resolvers/Hello";
 
 const main = async () => {
   // console.log(__dirname);
@@ -22,9 +25,19 @@ const main = async () => {
 
   const app = express();
 
-  app.get("/", (_, res) => {
-    res.send("Hello world! 📸");
+  // app.get("/", (_, res) => {
+  //   res.send("Hello world! 📸");
+  // });
+
+  const apolloServer = new ApolloServer({
+    schema: await buildSchema({
+      resolvers: [HelloResolver],
+      validate: false,
+    }),
   });
+
+  await apolloServer.start();
+  apolloServer.applyMiddleware({ app: app as any });
 
   app.listen(4000, () => {
     console.log("server listening on port 4000 🚀");
