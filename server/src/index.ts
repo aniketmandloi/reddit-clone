@@ -6,6 +6,8 @@ import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { HelloResolver } from "./resolvers/Hello";
+import { PostResolver } from "./resolvers/Post";
+import "reflect-metadata";
 
 const main = async () => {
   // console.log(__dirname);
@@ -31,9 +33,10 @@ const main = async () => {
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [HelloResolver],
+      resolvers: [HelloResolver, PostResolver],
       validate: false,
     }),
+    context: () => ({ em: orm.em }),
   });
 
   await apolloServer.start();
