@@ -5,13 +5,14 @@ import { MikroORM, PostgreSqlDriver } from "@mikro-orm/postgresql";
 import path from "path";
 // import { TsMorphMetadataProvider } from "@mikro-orm/reflection";
 import { Migrator } from "@mikro-orm/migrations";
+import { User } from "./entities/User";
 
 const mikroOrmConfig = {
   migrations: {
     path: path.join(__dirname, "./migrations"), // path to the folder with migrations
     pathTs: undefined,
   },
-  entities: [Post],
+  entities: [Post, User],
   dbName: "redditclone",
   // type: "postgresql",
   debug: !__prod__,
