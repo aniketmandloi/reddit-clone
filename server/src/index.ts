@@ -9,6 +9,15 @@ import { HelloResolver } from "./resolvers/Hello";
 import { PostResolver } from "./resolvers/Post";
 import "reflect-metadata";
 import { UserResolver } from "./resolvers/User";
+// import redis from "redis";
+import session from "express-session";
+import { MyContext } from "./types";
+// import cors from "cors";
+// import { RedisStore } from "connect-redis";
+// import RedisStore from "connect-redis";
+// import connectRedis from "connect-redis";
+import { createClient } from "redis";
+const RedisStore = require("connect-redis").default;
 
 const main = async () => {
   // console.log(__dirname);
@@ -28,16 +37,48 @@ const main = async () => {
 
   const app = express();
 
+  // app.use(cors());
+
+  // app.use(
+  //   cors({
+  //     origin: "https://studio.apollographql.com",
+  //     credentials: true,
+  //   })
+  // );
+
   // app.get("/", (_, res) => {
   //   res.send("Hello world! 📸");
   // });
 
+  const redisClient = createClient();
+  redisClient.connect().catch(console.error);
+  let redisStore = new RedisStore({
+    client: redisClient,
+    disableTouch: true,
+    prefix: "session:",
+  });
+
+  app.use(
+    session({
+      name: "qid",
+      store: redisStore,
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
+        httpOnly: true,
+        secure: __prod__,
+        sameSite: "lax",
+      },
+      saveUninitialized: false,
+      secret: "SECRET",
+      resave: false,
+    })
+  );
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
       resolvers: [HelloResolver, PostResolver, UserResolver],
       validate: false,
     }),
-    context: () => ({ em: orm.em }),
+    context: ({ req, res }): MyContext => ({ em: orm.em, req, res }),
   });
 
   await apolloServer.start();

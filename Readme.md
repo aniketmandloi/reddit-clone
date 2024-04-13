@@ -17,6 +17,15 @@ This template provides a minimal setup to get Node.js working with Express and G
 - Create a database: `createdb redditclone`
 - Run the Migration: `npx mikro-orm migration:create`
 
+#### Redis Setup
+
+only if you want to see cookie saved on your local environment
+
+- Install redis in your computer: [https://redis.io/download](Redis) or using brew: `brew install redis`
+- Test redis installation: `redis-server`
+- Start redis: `brew services start redis`
+- After usage stop redis server: `brew services stop redis`
+
 #### Run the server Locally
 
 - Change the directory to server: `cd server`
