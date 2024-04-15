@@ -65,8 +65,10 @@ const main = async () => {
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
         httpOnly: true,
-        secure: __prod__,
+        secure: false,
         sameSite: "lax",
+        domain: "localhost",
+        path: "/",
       },
       saveUninitialized: false,
       secret: "SECRET",
@@ -78,7 +80,11 @@ const main = async () => {
       resolvers: [HelloResolver, PostResolver, UserResolver],
       validate: false,
     }),
-    context: ({ req, res }): MyContext => ({ em: orm.em, req, res }),
+    context: ({ req, res }): MyContext => ({
+      em: orm.em,
+      req: req as any,
+      res: res as any,
+    }),
   });
 
   await apolloServer.start();
